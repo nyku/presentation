@@ -78,16 +78,12 @@ class Switch
       @pools ||= {}
     end
 
-    def env
-      Rails.env.to_sym
-    end
-
     def shards
-      Settings.sharding.send(env).shards
+      Settings.sharding.send(Rails.env.to_sym).shards
     end
 
     def master_shard
-      Settings.sharding.send(env).master_shard
+      Settings.sharding.send(Rails.env.to_sym).master_shard
     end
   end
 end
