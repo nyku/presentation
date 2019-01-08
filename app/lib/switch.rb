@@ -4,6 +4,7 @@ class Switch
   class << self
 
     # Connect / Disconnect shards ---------------------------------------------------------
+
     def connect_shards!
       shards.each do |shard, databases|
         databases.each { |name, connection| connect(connection.to_sym) }
@@ -21,6 +22,7 @@ class Switch
 
 
     # Connect a shard ---------------------------------------------------------------------
+
     def connect(name)
       return if pools[name]
 
@@ -39,6 +41,7 @@ class Switch
 
 
     # Execute a query withing a database -------------------------------------------------
+
     def with_database(name, &block)
       original_connection = Thread.current[:_db_connection]
       pool                = pools[name.to_sym]
@@ -62,6 +65,7 @@ class Switch
 
 
     # Execute a query withing a specific type of DB (master/slave) -----------------------
+
     def with_master(shard, &block)
       master = shards.send(shard.to_s).master
       with_database(master.to_sym, &block)
@@ -74,6 +78,7 @@ class Switch
 
 
     # Helper methods ---------------------------------------------------------------------
+
     def pools
       @pools ||= {}
     end
