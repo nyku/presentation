@@ -1,0 +1,30 @@
+defaults: &defaults
+  sharding:
+    development:
+      master_shard: shard1
+      shards:
+        shard1:
+          master: development
+          slave1: development
+        shard2:
+          master: development2
+          slave1: development2
+    test:
+      master_shard: shard1
+      shards:
+        shard1:
+          master: test
+          slave1: test
+        shard2:
+          master: test2
+          slave1: test2
+  replication:
+    slaves_enabled: false
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+
