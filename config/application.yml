@@ -5,10 +5,10 @@ defaults: &defaults
       shards:
         shard1:
           master: development
-          slave1: development
+          slave:  development
         shard2:
           master: development2
-          slave1: development2
+          slave:  development2
     test:
       master_shard: shard1
       shards:
@@ -18,13 +18,9 @@ defaults: &defaults
         shard2:
           master: test2
           slave1: test2
-  replication:
-    slaves_enabled: false
 
 development:
   <<: *defaults
 
 test:
   <<: *defaults
-
-
