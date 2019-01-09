@@ -14,6 +14,7 @@ gem "settingslogic"
 gem "pry-byebug"
 gem "devise"
 gem "haml-rails"
+gem "faker"
 
 gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
