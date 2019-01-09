@@ -17,6 +17,6 @@
     %tr
       %td= connection.id
       %td= connection.name
-      %td= connection.accounts.count
+      %td= link_to connection.accounts.count, users_accounts_path(connection_id: connection.id)
       %td= connection.created_at.strftime("%Y-%m-%d %H:%M:%S")
       %td= button_to "Destroy", users_connection_path(connection), method: :delete

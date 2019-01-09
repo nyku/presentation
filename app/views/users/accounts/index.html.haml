@@ -1,0 +1,20 @@
+= link_to "Back", users_connections_path
+%h3= "Accounts for connection: #{@connection.name}"
+
+%table
+  %thead
+    %td ID
+    %td Name
+    %td Balance
+    %td Currency
+    %td Transactions
+    %td Created
+  %tbody
+  - @accounts.each do |account|
+    %tr
+      %td= account.id
+      %td= account.name
+      %td= account.balance
+      %td= account.currency
+      %td= link_to account.transactions.count, users_transactions_path(connection_id: @connection.id, account_id: account.id)
+      %td= account.created_at.strftime("%Y-%m-%d %H:%M:%S")

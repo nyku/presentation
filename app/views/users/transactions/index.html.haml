@@ -1,0 +1,20 @@
+= link_to "Back", :back
+%h3= "Transactions for account: #{@account.name}"
+
+%table
+  %thead
+    %td ID
+    %td Description
+    %td Amount
+    %td Currency
+    %td Made on
+    %td Created
+  %tbody
+  - @transactions.each do |transaction|
+    %tr
+      %td= transaction.id
+      %td= transaction.description
+      %td= transaction.amount
+      %td= transaction.currency
+      %td= transaction.made_on
+      %td= transaction.created_at.strftime("%Y-%m-%d %H:%M:%S")
