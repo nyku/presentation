@@ -2,7 +2,7 @@ development:
   host: localhost
   adapter: postgresql
   encoding: unicode
-  database: presentation_development
+  database: <%= ENV['DB'] || 'presentation_development' %>
   pool: 5
   username: test
   password: test
@@ -11,7 +11,7 @@ development2:
   host: localhost
   adapter: postgresql
   encoding: unicode
-  database: presentation_development2
+  database: <%= ENV['DB'] || 'presentation_development2' %>
   pool: 5
   username: test
   password: test

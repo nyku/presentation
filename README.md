@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Implementing Sharding
 
-Things you may want to cover:
+1. Create second shard database
 
-* Ruby version
+```sh
+DB=presentation_development2 rake db:create
+```
 
-* System dependencies
+2. Replicate schema
 
-* Configuration
+```sh
+pg_dump --schema-only -U test -h localhost -W presentation_development | psql presentation_development2 -U test -W -h localhost
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
