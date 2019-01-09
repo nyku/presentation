@@ -4,6 +4,9 @@
 %code= "App id: #{current_user.app_id}"
 %br
 %code= "Secret: #{current_user.secret}"
+%br
+%br
+= button_to "Sign out", destroy_user_session_path, method: :delete
 %hr
 %h3 Connections
 %h5= flash[:notice] if flash[:notice]
