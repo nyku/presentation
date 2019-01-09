@@ -20,8 +20,8 @@
       %br
       = link_to "Back", users_connections_path, class: "btn btn-info"
       %hr
-    /= content_tag(:div, flash[:error],  :class => "alert alert-danger") if flash[:error]
-    /= content_tag(:div, flash[:notice], :class => "alert alert-info")   if flash[:notice]
-
-    - flash.clear
     = yield
+
+    = content_tag(:div, flash[:error],  :class => "alert alert-danger") if flash[:error]
+    = content_tag(:div, flash[:notice], :class => "alert alert-info")   if flash[:notice]
+    - flash.clear

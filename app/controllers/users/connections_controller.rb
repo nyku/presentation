@@ -28,6 +28,17 @@ class Users::ConnectionsController < Users::BaseController
     redirect_back fallback_location: :root
   end
 
+  def update
+    @connection = current_user.connections.find_by(id: params[:id])
+
+    if @connection
+      flash[:notice] = "Connection #{@connection.name} was updated!"
+      @connection.update_attributes!(name: params[:name])
+    end
+
+    redirect_back fallback_location: :root
+  end
+
   def destroy
     @connection = current_user.connections.find_by(id: params[:id])
 
