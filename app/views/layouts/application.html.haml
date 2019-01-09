@@ -8,7 +8,7 @@
     = javascript_include_tag 'application'
   %body.container
     - if current_user
-      %h3 User
+      %h3= link_to "User", users_connections_path
       %code= "Email: #{current_user.email}"
       %br
       %code= "App id: #{current_user.app_id}"
@@ -17,8 +17,6 @@
       %br
       %br
       = button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-warning"
-      %br
-      = link_to "Back", users_connections_path, class: "btn btn-info"
       %hr
     = yield
 
