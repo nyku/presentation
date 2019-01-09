@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :connections,  only: :index
+    resources :connections,  only: [:index, :show, :update, :destroy]
     resources :accounts,     only: :index
     resources :transactions, only: :index
   end

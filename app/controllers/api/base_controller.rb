@@ -1,5 +1,6 @@
 class Api::BaseController < ApplicationController
   rescue_from ArgumentError, with: :handle_api_error
+  skip_before_action :verify_authenticity_token
 
   private
 
@@ -13,8 +14,9 @@ class Api::BaseController < ApplicationController
   end
 
   def api_connection
-    @api_connection = api_user.connections.find_by(id: params[:connection_id])
-    raise ArgumentError.new("Connection with id: '#{params[:connection_id]}'was not found") unless @api_connection
+    identifier = params[:id] || params[:connection_id]
+    @api_connection = api_user.connections.find_by(id: identifier)
+    raise ArgumentError.new("Connection with id: '#{identifier}'was not found") unless @api_connection
     @api_connection
   end
 
