@@ -1,13 +1,3 @@
-%h3 User
-%code= "Email: #{current_user.email}"
-%br
-%code= "App id: #{current_user.app_id}"
-%br
-%code= "Secret: #{current_user.secret}"
-%br
-%br
-= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-warning"
-%hr
 %h3 Connections
 = form_tag("/users/connections", method: "post", class: "form form-inline") do
   .form-group

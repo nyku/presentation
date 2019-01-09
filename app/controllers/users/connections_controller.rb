@@ -9,14 +9,14 @@ class Users::ConnectionsController < Users::BaseController
     rand(1..5).times do
       account    = connection.accounts.create!(
         name:     "[#{connection.name}] #{Faker::Name.unique.name}",
-        balance:  rand(1000),
+        balance:  rand * 1000,
         currency: %W(USD EUR CAD GBP).sample
       )
 
     rand(1..5).times do
         account.transactions.create(
           description: "[#{connection.name}] #{Faker::Company.bs}",
-          amount:      rand(2000),
+          amount:      rand * 1000,
           currency:    account.currency,
           made_on:     rand(100).days.ago.to_date
         )
