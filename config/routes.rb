@@ -7,4 +7,10 @@ Rails.application.routes.draw do
       resources :transactions, only: [:index]
     end
   end
+
+  namespace :api do
+    resources :connections,  only: :index
+    resources :accounts,     only: :index
+    resources :transactions, only: :index
+  end
 end

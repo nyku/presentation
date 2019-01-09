@@ -1,3 +1,10 @@
+%h3 User
+%code= "Email: #{current_user.email}"
+%br
+%code= "App id: #{current_user.app_id}"
+%br
+%code= "Secret: #{current_user.secret}"
+%hr
 %h3 Connections
 %h5= flash[:notice] if flash[:notice]
 = form_tag("/users/connections", method: "post") do
