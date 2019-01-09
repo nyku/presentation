@@ -79,6 +79,12 @@ class Switch
 
     # Helper methods ---------------------------------------------------------------------
 
+    def masters(&block)
+      shards.map do |shard, databases|
+        databases["master"].to_sym
+      end
+    end
+
     def pools
       @pools ||= {}
     end

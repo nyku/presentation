@@ -24,12 +24,3 @@ test:
   pool: 5
   username: test
   password: test
-
-test2:
-  host: localhost
-  adapter: postgresql
-  encoding: unicode
-  database: presentation_test2
-  pool: 5
-  username: test
-  password: test
