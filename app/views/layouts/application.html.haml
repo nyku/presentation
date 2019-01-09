@@ -6,5 +6,9 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-  %body
+  %body.container
+    = content_tag(:div, flash[:error],  :class => "alert alert-danger") if flash[:error]
+    = content_tag(:div, flash[:notice], :class => "alert alert-info")   if flash[:notice]
+
+    - flash.clear
     = yield
