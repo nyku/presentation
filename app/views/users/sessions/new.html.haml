@@ -1,0 +1,13 @@
+.row
+  .col-md-4
+  .col-md-4
+    %h3 Log in
+    = form_for(resource, as: resource_name, url: session_path(resource_name), class: "form") do |f|
+      .form-group.row
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "email"
+      .form-group.row
+        = f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "password"
+      .actions
+        = f.submit "Log in", class: "btn btn-primary"
+    = render "users/shared/links"
+  .col-md-4

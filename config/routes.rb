@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    sessions:      "users/sessions",
+  }
+
   namespace :users do
     authenticate :user do
       resources :connections, only: [:index, :create, :destroy]
@@ -13,4 +17,6 @@ Rails.application.routes.draw do
     resources :accounts,     only: :index
     resources :transactions, only: :index
   end
+
+  root "users/connections#index"
 end

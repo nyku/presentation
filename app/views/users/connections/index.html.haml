@@ -4,19 +4,20 @@
     = label_tag :name, "Name"
     = text_field_tag :name, nil, { class: "form-control" }
   = submit_tag "Create", class: "btn btn-success"
-%br
-%table.table.table-bordered
-  %thead
-    %td ID
-    %td Name
-    %td Accounts
-    %td Created
-    %td Action
-  %tbody
-  - @connections.each do |connection|
-    %tr
-      %td= connection.id
-      %td= connection.name
-      %td= link_to connection.accounts.count, users_accounts_path(connection_id: connection.id)
-      %td= connection.created_at.strftime("%Y-%m-%d %H:%M:%S")
-      %td= button_to "Destroy", users_connection_path(connection), method: :delete, class: "btn btn-danger"
+- if @connections.any?
+  %br
+  %table.table.table-bordered
+    %thead
+      %td ID
+      %td Name
+      %td Accounts
+      %td Created
+      %td Action
+    %tbody
+    - @connections.each do |connection|
+      %tr
+        %td= connection.id
+        %td= connection.name
+        %td= link_to connection.accounts.count, users_accounts_path(connection_id: connection.id)
+        %td= connection.created_at.strftime("%Y-%m-%d %H:%M:%S")
+        %td= button_to "Destroy", users_connection_path(connection), method: :delete, class: "btn btn-danger"
