@@ -9,11 +9,21 @@
   %body.container
     - if current_user
       %h3= link_to "User", users_connections_path
-      %code= "Email: #{current_user.email}"
+      %code
+        %b= "Shard: "
+        = user_shard
       %br
-      %code= "App id: #{current_user.app_id}"
+      %code
+        %b= "Email: "
+        = current_user.email
       %br
-      %code= "Secret: #{current_user.secret}"
+      %code
+        %b= "App-Id: "
+        = current_user.app_id
+      %br
+      %code
+        %b= "Secret: "
+        = current_user.secret
       %br
       %br
       = button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-warning"
