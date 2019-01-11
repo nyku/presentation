@@ -1,3 +1,14 @@
+Switch.connect_shards!
+
+module ActiveRecord
+  module ConnectionHandling
+    alias_method :original_retrieve_connection, :retrieve_connection
+    def retrieve_connection
+      Thread.current[:_db_connection] || original_retrieve_connection
+    end
+  end
+end
+
 module ActiveRecord
   class Migration
     def migrate(direction)
