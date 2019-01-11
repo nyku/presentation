@@ -1,14 +1,21 @@
 class Switch
   class << self
     def with_database(name, &block)
-      initial_connection_config = ActiveRecord::Base.connection.instance_variable_get(:@config)
+      initial_connection_config = ActiveRecord::Base.connection.instance_variable_get(:@config).stringify_keys
       configurations            = Rails.configuration.database_configuration
-      connection                = ActiveRecord::Base.establish_connection configurations[name.to_s]
-      yield connection
+
+      unless initial_connection_config == configurations[name.to_s]
+        ActiveRecord::Base.establish_connection configurations[name.to_s]
+      end
+
+      yield
+
     rescue
       nil
     ensure
-      ActiveRecord::Base.establish_connection initial_connection_config
+      unless initial_connection_config == configurations[name.to_s]
+        ActiveRecord::Base.establish_connection initial_connection_config
+      end
     end
 
     def with_master(shard, &block)
