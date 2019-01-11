@@ -15,6 +15,7 @@ gem "pry-byebug"
 gem "devise"
 gem "haml-rails"
 gem "faker"
+gem "redis"
 gem "rails-assets-bootstrap"
 
 gem 'coffee-rails', '~> 4.2'

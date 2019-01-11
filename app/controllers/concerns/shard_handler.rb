@@ -18,13 +18,19 @@ module ShardHandler
   private
 
   def select_shard
-    "shard2"
-    # return shard_by_api_headers if controller_ancestors.include?(Api::BaseController)
-    # Tool::DatabaseManager.master_shard
+    return shard_by_api_headers if controller_ancestors.include?(Api::BaseController)
+    return shard_by_logged_user if controller_ancestors.include?(Users::BaseController)
+    Switch.master_shard
   end
 
   def shard_by_api_headers
-    LookupUser.find_by(app_id: request.headers["HTTP_APP_ID"]).try(:shard) || Switch.master_shard
+    LookupUser.find_by(app_id: request.headers["HTTP_APP_ID"]).try(:shard)
+  end
+
+  def shard_by_logged_user
+    Switch.with_master(Switch.master_shard) do
+      LookupUser.find_by(id: session[:user_id]).try(:shard)
+    end
   end
 
   def print_result

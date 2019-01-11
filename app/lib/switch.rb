@@ -1,11 +1,14 @@
-require 'ostruct'
-
 class Switch
   class << self
     def with_database(name, &block)
-      configurations = Rails.configuration.database_configuration
-      ActiveRecord::Base.establish_connection configurations[name.to_s]
-      yield
+      initial_connection_config = ActiveRecord::Base.connection.instance_variable_get(:@config)
+      configurations            = Rails.configuration.database_configuration
+      connection                = ActiveRecord::Base.establish_connection configurations[name.to_s]
+      yield connection
+    rescue
+      nil
+    ensure
+      ActiveRecord::Base.establish_connection initial_connection_config
     end
 
     def with_master(shard, &block)

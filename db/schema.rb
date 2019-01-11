@@ -14,52 +14,13 @@ ActiveRecord::Schema.define(version: 20190111000652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "accounts", force: :cascade do |t|
-    t.integer "connection_id"
-    t.string "name"
-    t.float "balance"
-    t.string "currency"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "connections", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+  enable_extension "pglogical"
 
   create_table "lookup_users", force: :cascade do |t|
     t.string "email"
     t.string "app_id"
     t.string "secret"
     t.string "shard"
-  end
-
-  create_table "transactions", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "description"
-    t.float "amount"
-    t.string "currency"
-    t.date "made_on"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "app_id"
-    t.string "secret"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end
