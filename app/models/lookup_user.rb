@@ -1,0 +1,2 @@
+class LookupUser < ApplicationRecord
+end
