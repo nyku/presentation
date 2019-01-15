@@ -8,7 +8,6 @@ module ShardHandler
   attr_reader :controller_ancestors, :shard, :connection
 
   def with_shard(&block)
-    Switch.connect_shards!
     @controller_ancestors = self.class.ancestors
     @shard                = select_shard || Switch.master_shard
     @connection           = Switch.shards.public_send(shard.to_s).master

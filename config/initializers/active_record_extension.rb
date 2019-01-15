@@ -1,5 +1,3 @@
-Switch.connect_shards!
-
 module ActiveRecord
   module ConnectionHandling
     alias_method :original_retrieve_connection, :retrieve_connection
@@ -8,6 +6,8 @@ module ActiveRecord
     end
   end
 end
+
+Switch.connect_shards!
 
 module ActiveRecord
   class Migration
