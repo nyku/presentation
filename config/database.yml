@@ -7,11 +7,29 @@ development:
   username: test
   password: test
 
+development_slave:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: presentation_development_slave
+  pool: 5
+  username: test
+  password: test
+
 development2:
   host: localhost
   adapter: postgresql
   encoding: unicode
   database: presentation_development2
+  pool: 5
+  username: test
+  password: test
+
+development2_slave:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: presentation_development2_slave
   pool: 5
   username: test
   password: test

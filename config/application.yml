@@ -5,10 +5,10 @@ defaults: &defaults
       shards:
         shard1:
           master: development
-          slave:  development
+          slave:  development_slave
         shard2:
           master: development2
-          slave:  development2
+          slave:  development2_slave
     test:
       master_shard: shard1
       shards:

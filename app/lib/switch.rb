@@ -7,9 +7,14 @@ class Switch
 
     def connect_shards!
       $pools ||= {}
+      p "Connecting:"
       shards.each do |shard, databases|
-        databases.each { |name, connection| connect(connection.to_sym) }
+        databases.each do |name, connection|
+          p connection
+          connect(connection.to_sym)
+        end
       end
+      nil
     end
 
     def with_database(name, &block)
@@ -52,6 +57,11 @@ class Switch
     def with_master(shard, &block)
       master = shards.send(shard.to_s).master
       with_database(master, &block)
+    end
+
+    def with_slave(shard, &block)
+      slave = shards.send(shard.to_s).slave
+      with_database(slave, &block)
     end
 
     def masters(&block)
