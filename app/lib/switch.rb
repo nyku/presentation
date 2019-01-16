@@ -6,7 +6,7 @@ class Switch
     Resolver = ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver
 
     def connect_shards!
-      $pools ||= {}
+      @pools ||= {}
       p "Connecting:"
       shards.each do |shard, databases|
         databases.each do |name, connection|
@@ -19,7 +19,7 @@ class Switch
 
     def with_database(name, &block)
       original_connection = Thread.current[:_db_connection]
-      pool                = $pools[name.to_sym]
+      pool                = @pools[name.to_sym]
       result              = nil
 
       unless pool
@@ -39,7 +39,7 @@ class Switch
     end
 
     def connect(name)
-      return if $pools[name]
+      return if @pools[name]
 
       configurations = ActiveRecord::Base.configurations
       spec           = Resolver.new(configurations).spec(name)
@@ -51,7 +51,7 @@ class Switch
         ActiveRecord::Base.connection_handler.establish_connection(spec.as_json)
       end
 
-      $pools[name] = pool
+      @pools[name] = pool
     end
 
     def with_master(shard, &block)
