@@ -1,6 +1,7 @@
 defaults: &defaults
   sharding:
     development:
+      slaves_enabled: false
       master_shard: shard1
       shards:
         shard1:
@@ -10,14 +11,15 @@ defaults: &defaults
           master: development2
           slave:  development2_slave
     test:
+      slaves_enabled: false
       master_shard: shard1
       shards:
         shard1:
           master: test
-          slave1: test
+          slave: test
         shard2:
           master: test2
-          slave1: test2
+          slave: test2
 
 development:
   <<: *defaults

@@ -77,5 +77,9 @@ class Switch
     def master_shard
       Settings.sharding.send(Rails.env.to_sym).master_shard
     end
+
+    def slaves_enabled?
+      Settings.sharding.send(Rails.env.to_sym).slaves_enabled
+    end
   end
 end
