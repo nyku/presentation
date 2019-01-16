@@ -44,12 +44,18 @@ pg_dump --schema-only -U test -h localhost -W presentation_development2 | psql p
 rake shard_sequences:update
 ```
 
-6. Run the application
+6. Simulate replication between masters/slaves (optional)
+
+```sh
+ruby tmp/sync.sh
+```
+
+7. Run the application
 
 ```sh
 rails s
 ```
 
-7. Sign up
+8. Sign up
 
 http://localhost:3000/users/sign_up
