@@ -16,6 +16,7 @@ gem "devise"
 gem "haml-rails"
 gem "faker"
 gem "redis"
+gem "pgsync"
 gem "rails-assets-bootstrap"
 
 gem 'coffee-rails', '~> 4.2'
