@@ -59,3 +59,25 @@ rails s
 8. Sign up
 
 http://localhost:3000/users/sign_up
+
+
+--------------------------
+
+### API
+
+Authentication headers:
+
+| Header       | DB field       |
+|--------------|----------------|
+| `App-Id`     | `User.app_id`  |
+| `App-Secret` | `User.secret`  |
+
+
+Routes:
+
+| Name              | Route                                                                                              |
+|-------------------|----------------------------------------------------------------------------------------------------|
+| List connections  | **GET** http://localhost:3000/api/connections                                                      |
+| Show connection   | **GET** http://localhost:3000/api/connections/:id                                                  |
+| List accounts     | **GET** http://localhost:3000/api/accounts?connection_id=:id                                       |
+| List transactions | **GET** http://localhost:3000/api/transactions?connection_id=:connection_id&account_id=:account_id |
