@@ -9,11 +9,11 @@
 
 # Ignore configs
 
-# /config/secrets.yml
-# /config/database.yml
-# /config/application.yml
-# .pgsync-shard1.yml
-# .pgsync-shard2.yml
+/config/secrets.yml
+/config/database.yml
+/config/application.yml
+.pgsync-shard1.yml
+.pgsync-shard2.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*
