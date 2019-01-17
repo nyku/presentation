@@ -2,6 +2,15 @@
 
 ### Setup
 
+0. Create configs
+
+```sh
+cp .pgsync-shard1.example.yml .pgsync-shard1.yml
+cp .pgsync-shard2.example.yml .pgsync-shard2.yml
+cp config/application.example.yml config/application.yml
+cp config/database.example.yml config/database.yml
+```
+
 1. Update `config/database.yml`
 
 ```yaml

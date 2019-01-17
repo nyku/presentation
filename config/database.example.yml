@@ -1,0 +1,44 @@
+development:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV['DB'] || 'presentation_development' %>
+  pool: 5
+  username: test
+  password: test
+
+development_slave:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: presentation_development_slave
+  pool: 5
+  username: test
+  password: test
+
+development2:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV['DB'] || 'presentation_development2' %>
+  pool: 5
+  username: test
+  password: test
+
+development2_slave:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: presentation_development2_slave
+  pool: 5
+  username: test
+  password: test
+
+test:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: presentation_test
+  pool: 5
+  username: test
+  password: test
