@@ -2,7 +2,26 @@
 
 ### Setup
 
-0. Drop all databases
+1. Update `config/database.yml`
+
+```yaml
+username: YOUR_PG_USERNAME
+password: YOUR_PG_PASSWORD
+```
+
+2. Update `.pgsync-shard1.yml`, `.pgsync-shard2.yml` (Optional)
+
+```yaml
+from: postgres://YOUR_PG_USERNAME:YOUR_PG_PASSWORD@localhost:5432/presentation_development
+to: postgres://YOUR_PG_USERNAME:YOUR_PG_PASSWORD@localhost:5432/presentation_development_slave
+```
+
+```yaml
+from: postgres://YOUR_PG_USERNAME:YOUR_PG_PASSWORD@localhost:5432/presentation_development2
+to: postgres://YOUR_PG_USERNAME:YOUR_PG_PASSWORD@localhost:5432/presentation_development2_slave
+```
+
+3. Drop all databases (Optional)
 
 ```sh
 rake db:drop
@@ -11,13 +30,13 @@ DB=presentation_development_slave  rake db:drop
 DB=presentation_development2_slave rake db:drop
 ```
 
-1. Create database
+4. Create database
 
 ```sh
 rake db:create
 ```
 
-2. Create shard 1 slave, shard 2 master, shard 2 slave
+5. Create shard 1 slave, shard 2 master, shard 2 slave
 
 ```sh
 DB=presentation_development_slave  rake db:create
@@ -25,38 +44,38 @@ DB=presentation_development2       rake db:create
 DB=presentation_development2_slave rake db:create
 ```
 
-3. Run migrations (on all masters)
+6. Run migrations (on all masters)
 
 ```sh
 rake db:migrate
 ```
 
-4. Replicate schema (on all slaves)
+7. Replicate schema (on all slaves)
 
 ```sh
-pg_dump --schema-only -U test -h localhost -W presentation_development  | psql presentation_development_slave  -U test -W -h localhost
-pg_dump --schema-only -U test -h localhost -W presentation_development2 | psql presentation_development2_slave -U test -W -h localhost
+pg_dump --schema-only -U YOUR_PG_USERNAME -h localhost -W presentation_development  | psql presentation_development_slave  -U YOUR_PG_USERNAME -W -h localhost
+pg_dump --schema-only -U YOUR_PG_USERNAME -h localhost -W presentation_development2 | psql presentation_development2_slave -U YOUR_PG_USERNAME -W -h localhost
 ```
 
-5. Update sequences
+8. Update sequences
 
 ```sh
 rake shard_sequences:update
 ```
 
-6. Simulate replication between masters/slaves (optional)
+9. Simulate replication between masters/slaves (optional)
 
 ```sh
-ruby app/lib/sync.sh
+ruby app/lib/sync.rb
 ```
 
-7. Run the application
+10. Run the application
 
 ```sh
 rails s
 ```
 
-8. Sign up
+11. Sign up
 
 http://localhost:3000/users/sign_up
 

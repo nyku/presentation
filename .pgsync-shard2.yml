@@ -1,5 +1,5 @@
-from: postgres://localhost:5432/presentation_development2
-to: postgres://localhost:5432/presentation_development2_slave
+from: postgres://test:test@localhost:5432/presentation_development2
+to: postgres://test:test@localhost:5432/presentation_development2_slave
 
 exclude:
   - schema_migrations
