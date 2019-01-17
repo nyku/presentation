@@ -79,7 +79,7 @@ Routes:
 |-------------------|----------------------------------------------------------------------------------------------------|
 | List connections  | **GET** http://localhost:3000/api/connections                                                      |
 | Show connection   | **GET** http://localhost:3000/api/connections/:id                                                  |
-| Update connection | **PUT** http://localhost:3000/api/connections/:id       body: `{ "data": { "name": "updated" }}`   |
+| Update connection | **PUT** http://localhost:3000/api/connections/:id             `{ "data": { "name": "updated" }}`   |
 | Delete connection | **DELETE** http://localhost:3000/api/connections/:id                                               |
 | List accounts     | **GET** http://localhost:3000/api/accounts?connection_id=:id                                       |
 | List transactions | **GET** http://localhost:3000/api/transactions?connection_id=:connection_id&account_id=:account_id |
