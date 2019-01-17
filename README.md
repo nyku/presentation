@@ -47,7 +47,7 @@ rake shard_sequences:update
 6. Simulate replication between masters/slaves (optional)
 
 ```sh
-ruby tmp/sync.sh
+ruby app/lib/sync.sh
 ```
 
 7. Run the application
