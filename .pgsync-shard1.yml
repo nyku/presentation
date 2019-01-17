@@ -1,6 +1,0 @@
-from: postgres://test:test@localhost:5432/presentation_development
-to: postgres://test:test@localhost:5432/presentation_development_slave
-
-exclude:
-  - schema_migrations
-  - ar_internal_metadata
