@@ -9,17 +9,17 @@ module ShardHandler
 
   def with_shard(&block)
     @controller_ancestors = self.class.ancestors
-    @shard                = select_shard || Switch.master_shard
+    @shard                = select_shard || DatabaseHandler.master_shard
     @database             = select_database || :master
-    @connection           = Switch.shards.public_send(shard.to_s).send(database.to_sym)
+    @connection           = DatabaseHandler.shards.public_send(shard.to_s).send(database.to_sym)
     print_result
-    Switch.with_database(connection, &block)
+    DatabaseHandler.with_database(connection, &block)
   end
 
   private
 
   def select_database
-    return :master unless Switch.slaves_enabled?
+    return :master unless DatabaseHandler.slaves_enabled?
     return :master if ["POST", "PUT", "PATCH", "DELETE"].include?(request.method)
     :slave
   end
@@ -27,7 +27,7 @@ module ShardHandler
   def select_shard
     return shard_by_api_headers if controller_ancestors.include?(Api::BaseController)
     return shard_by_logged_user if controller_ancestors.include?(Users::BaseController)
-    Switch.master_shard
+    DatabaseHandler.master_shard
   end
 
   def shard_by_api_headers
@@ -35,7 +35,7 @@ module ShardHandler
   end
 
   def shard_by_logged_user
-    Switch.with_master(Switch.master_shard) do
+    DatabaseHandler.with_master(DatabaseHandler.master_shard) do
       LookupUser.find_by(id: session[:user_id]).try(:shard)
     end
   end

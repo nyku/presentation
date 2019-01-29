@@ -14,8 +14,8 @@ class User < ApplicationRecord
   private
 
   def create_on_shard(&block)
-    @shard = (Switch.shards.keys - [LookupUser.last.try(:shard)]).sample
-    Switch.with_master(shard) do
+    @shard = (DatabaseHandler.shards.keys - [LookupUser.last.try(:shard)]).sample
+    DatabaseHandler.with_master(shard) do
       yield
     end
   end
@@ -26,13 +26,13 @@ class User < ApplicationRecord
   end
 
   def create_lookup_user
-    Switch.with_master(Switch.master_shard) do
+    DatabaseHandler.with_master(DatabaseHandler.master_shard) do
       LookupUser.create(id: id, email: email, app_id: app_id, secret: secret, shard: shard)
     end
   end
 
   def destroy_lookup_user
-    Switch.with_master(Switch.master_shard) do
+    DatabaseHandler.with_master(DatabaseHandler.master_shard) do
       LookupUser.where(id: id).delete_all
     end
   end

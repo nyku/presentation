@@ -7,7 +7,7 @@ module ActiveRecord
   end
 end
 
-Switch.connect_shards!
+DatabaseHandler.connect_shards!
 
 module ActiveRecord
   class Migration
@@ -49,8 +49,8 @@ module ActiveRecord
       runnable.each do |migration|
         Base.logger.info "Migrating to #{migration.name} (#{migration.version})" if Base.logger
 
-        Switch.masters.each do |connection_name|
-          Switch.with_database(connection_name) do |connection|
+        DatabaseHandler.masters.each do |connection_name|
+          DatabaseHandler.with_database(connection_name) do |connection|
             ActiveRecord::SchemaMigration.create_table
 
             begin
@@ -58,7 +58,7 @@ module ActiveRecord
               @migrated_shards << connection_name
             rescue => e
               @migrated_shards.each do |connection_name|
-                Switch.with_database(connection_name) do |connection|
+                DatabaseHandler.with_database(connection_name) do |connection|
                   opposite_direction = { up: :down, down: :up }
                   execute_migration_in_transaction(migration, opposite_direction[@direction])
                 end

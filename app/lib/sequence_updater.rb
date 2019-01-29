@@ -1,6 +1,6 @@
 class SequenceUpdater
   def self.run(sequence_bump=1000)
-    masters   = Switch.masters
+    masters   = DatabaseHandler.masters
     sequences = {}
 
     masters.each do |master|
@@ -16,7 +16,7 @@ class SequenceUpdater
     end
 
     masters.each_with_index do |master, index|
-      Switch.with_database(master) do
+      DatabaseHandler.with_database(master) do
         ActiveRecord::Base.connection.execute(%Q{
           ALTER SEQUENCE users_id_seq        INCREMENT BY #{masters.count} RESTART WITH #{sequence_bump+index+1+sequences['users_id'].to_i};
           ALTER SEQUENCE connections_id_seq  INCREMENT BY #{masters.count} RESTART WITH #{sequence_bump+index+1+sequences['connections_id'].to_i};

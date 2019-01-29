@@ -17,11 +17,11 @@ module Devise
     module Authenticatable
       module ClassMethods
         def serialize_from_session(key, salt)
-          user_shard = Switch.with_master(Switch.master_shard) do
-            LookupUser.find_by(id: key).try(:shard) || Switch.master_shard
+          user_shard = DatabaseHandler.with_master(DatabaseHandler.master_shard) do
+            LookupUser.find_by(id: key).try(:shard) || DatabaseHandler.master_shard
           end
 
-          record = Switch.with_master(user_shard) do
+          record = DatabaseHandler.with_master(user_shard) do
             User.find_by(id: key)
           end
 

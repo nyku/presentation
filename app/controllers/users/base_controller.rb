@@ -6,7 +6,7 @@ class Users::BaseController < ApplicationController
   private
 
   def user_shard
-    Switch.with_master(Switch.master_shard) do
+    DatabaseHandler.with_master(DatabaseHandler.master_shard) do
       LookupUser.find_by(id: current_user.id).shard
     end
   end

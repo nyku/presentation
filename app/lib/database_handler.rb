@@ -1,6 +1,6 @@
 require 'ostruct'
 
-class Switch
+class DatabaseHandler
   class << self
 
     Resolver = ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver
