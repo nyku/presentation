@@ -16,6 +16,7 @@ gem "devise"
 gem "haml-rails"
 gem "faker"
 gem "redis"
+gem "redis-activesupport" # for caching
 gem "pgsync"
 gem "rails-assets-bootstrap"
 

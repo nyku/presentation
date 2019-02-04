@@ -31,7 +31,7 @@ module ShardHandler
   end
 
   def shard_by_api_headers
-    LookupUser.find_by(app_id: request.headers["HTTP_APP_ID"]).try(:shard)
+    LookupUser.get_shard(:app_id, request.headers["HTTP_APP_ID"])
   end
 
   def shard_by_logged_user

@@ -7,10 +7,8 @@ class DatabaseHandler
 
     def connect_shards!
       @pools ||= {}
-      p "Connecting:"
       shards.each do |shard, databases|
         databases.each do |name, connection|
-          p connection
           connect(connection.to_sym)
         end
       end
@@ -18,6 +16,7 @@ class DatabaseHandler
     end
 
     def with_database(name, &block)
+      connect_shards! unless @pools
       original_connection = Thread.current[:_db_connection]
       pool                = @pools[name.to_sym]
       result              = nil

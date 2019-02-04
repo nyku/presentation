@@ -8,10 +8,15 @@ class User < ApplicationRecord
 
   around_create :create_on_shard
   before_create :generate_secrets
+  after_update :expire_cache
   after_create  :create_lookup_user
-  after_destroy :destroy_lookup_user
+  after_destroy :destroy_lookup_user, :expire_cache
 
   private
+
+  def expire_cache
+    Rails.cache.delete("api_user:#{app_id}:#{secret}")
+  end
 
   def create_on_shard(&block)
     @shard = (DatabaseHandler.shards.keys - [LookupUser.last.try(:shard)]).sample
