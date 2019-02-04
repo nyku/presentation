@@ -9,13 +9,21 @@ class User < ApplicationRecord
   around_create :create_on_shard
   before_create :generate_secrets
   after_update :expire_cache
-  after_create  :create_lookup_user
+  after_create  :create_lookup_user, :create_cache
   after_destroy :destroy_lookup_user, :expire_cache
 
   private
 
+  def create_cache
+    Rails.cache.fetch(cache_key, expires_id: 24.hours) { self }
+  end
+
   def expire_cache
-    Rails.cache.delete("api_user:#{app_id}:#{secret}")
+    Rails.cache.delete(cache_key)
+  end
+
+  def cache_key
+    "api_user:#{app_id}:#{secret}"
   end
 
   def create_on_shard(&block)
