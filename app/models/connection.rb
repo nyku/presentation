@@ -5,6 +5,25 @@ class Connection < ApplicationRecord
   after_save    :expire_cache, :create_cache
   after_destroy :expire_cache
 
+  def generate_data
+    rand(1..5).times do
+      account = accounts.create!(
+        name:     "[#{name}] #{Faker::Name.unique.name}",
+        balance:  rand * 1000,
+        currency: %W(USD EUR CAD GBP).sample
+      )
+
+    rand(1..5).times do
+        account.transactions.create(
+          description: "[#{name}] #{Faker::Company.bs}",
+          amount:      rand * 1000,
+          currency:    account.currency,
+          made_on:     rand(100).days.ago.to_date
+        )
+      end
+    end
+  end
+
   private
 
   def create_cache

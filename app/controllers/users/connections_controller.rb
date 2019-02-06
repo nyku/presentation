@@ -5,24 +5,6 @@ class Users::ConnectionsController < Users::BaseController
 
   def create
     connection = current_user.connections.create!(name: params[:name])
-
-    rand(1..5).times do
-      account    = connection.accounts.create!(
-        name:     "[#{connection.name}] #{Faker::Name.unique.name}",
-        balance:  rand * 1000,
-        currency: %W(USD EUR CAD GBP).sample
-      )
-
-    rand(1..5).times do
-        account.transactions.create(
-          description: "[#{connection.name}] #{Faker::Company.bs}",
-          amount:      rand * 1000,
-          currency:    account.currency,
-          made_on:     rand(100).days.ago.to_date
-        )
-      end
-    end
-
     flash[:notice] = "Connection created!"
 
     redirect_back fallback_location: :root
@@ -34,6 +16,7 @@ class Users::ConnectionsController < Users::BaseController
     if @connection
       flash[:notice] = "Connection #{@connection.name} was updated!"
       @connection.update_attributes!(name: params[:name])
+      @connection.generate_data if @connection.accounts.empty? && params[:name].include?("generate")
       notify_client
     end
 
