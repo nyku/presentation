@@ -2,7 +2,6 @@ class Connection < ApplicationRecord
   belongs_to :user
   has_many :accounts, dependent: :destroy
 
-  after_create  :create_cache
   after_save    :expire_cache, :create_cache
   after_destroy :expire_cache
 
