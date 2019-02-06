@@ -8,9 +8,7 @@ class Connection < ApplicationRecord
   private
 
   def create_cache
-    Rails.cache.fetch(cache_key, expires_id: 24.hours) do
-      self
-    end
+    Rails.cache.fetch(cache_key, expires_id: 24.hours) { self }
   end
 
   def expire_cache
