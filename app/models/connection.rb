@@ -1,4 +1,6 @@
 class Connection < ApplicationRecord
+  attr_accessor :skip_cache_expire
+
   belongs_to :user
   has_many :accounts, dependent: :destroy
 
@@ -6,6 +8,8 @@ class Connection < ApplicationRecord
   after_destroy :expire_cache
 
   def generate_data
+    return if accounts.any?
+
     rand(1..5).times do
       account = accounts.create!(
         name:     "[#{name}] #{Faker::Name.unique.name}",
@@ -31,7 +35,7 @@ class Connection < ApplicationRecord
   end
 
   def expire_cache
-    Rails.cache.delete(cache_key)
+    Rails.cache.delete(cache_key) unless skip_cache_expire
   end
 
   def cache_key

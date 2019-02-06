@@ -15,9 +15,16 @@ class Users::ConnectionsController < Users::BaseController
 
     if @connection
       flash[:notice] = "Connection #{@connection.name} was updated!"
-      @connection.update_attributes!(name: params[:name])
-      @connection.generate_data if @connection.accounts.empty? && params[:name].include?("generate")
-      notify_client
+      @connection.name = params[:name]
+
+      if @connection.name.include?("generate")
+        @connection.generate_data
+        @connection.skip_cache_expire = true
+      else
+        notify_client
+      end
+
+      @connection.save!
     end
 
     redirect_back fallback_location: :root
