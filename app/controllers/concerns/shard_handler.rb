@@ -21,6 +21,7 @@ module ShardHandler
   def select_database
     return :master unless DatabaseHandler.slaves_enabled?
     return :master if ["POST", "PUT", "PATCH", "DELETE"].include?(request.method)
+    return :master if controller_ancestors.include?(Users::ConnectionsController)
     :slave
   end
 
