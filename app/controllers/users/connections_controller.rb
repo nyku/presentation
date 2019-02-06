@@ -34,6 +34,7 @@ class Users::ConnectionsController < Users::BaseController
     if @connection
       flash[:notice] = "Connection #{@connection.name} was updated!"
       @connection.update_attributes!(name: params[:name])
+      notify_client
     end
 
     redirect_back fallback_location: :root
@@ -48,5 +49,15 @@ class Users::ConnectionsController < Users::BaseController
     end
 
     redirect_back fallback_location: :root
+  end
+
+  private
+
+  def notify_client
+    l = Logger.new("tmp/client_notify.log")
+    l.info "\n\n\n"
+    l.info "--------------------------------------------------------------------------------------------"
+    l.info "#{@connection.updated_at} | ID: #{@connection.id} | Name: #{@connection.name}"
+    l.info "--------------------------------------------------------------------------------------------"
   end
 end
