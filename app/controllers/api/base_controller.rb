@@ -17,7 +17,7 @@ class Api::BaseController < ApplicationController
   def api_connection
     identifier = params[:id] || params[:connection_id]
 
-    Rails.cache.fetch("api_connection:#{identifier}", expires_in: 24.hours) do
+    Rails.cache.fetch("api_connection:#{api_user.id}:#{identifier}", expires_in: 24.hours) do
       @api_connection = api_user.connections.find_by(id: identifier)
       raise ArgumentError.new("Connection with id: '#{identifier}'was not found") unless @api_connection
       @api_connection
@@ -25,7 +25,7 @@ class Api::BaseController < ApplicationController
   end
 
   def api_account
-    Rails.cache.fetch("api_account:#{params[:account_id]}", expires_in: 24.hours) do
+    Rails.cache.fetch("api_account:#{api_connection.id}:#{params[:account_id]}", expires_in: 24.hours) do
       @api_account = api_connection.accounts.find_by(id: params[:account_id])
       raise ArgumentError.new("Account with id: '#{params[:account_id]}' was not found") unless @api_account
       @api_account

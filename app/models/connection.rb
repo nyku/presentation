@@ -3,13 +3,15 @@ class Connection < ApplicationRecord
   has_many :accounts, dependent: :destroy
 
   after_create  :create_cache
-  after_update  :expire_cache
+  after_save    :expire_cache, :create_cache
   after_destroy :expire_cache
 
   private
 
   def create_cache
-    Rails.cache.fetch(cache_key, expires_id: 24.hours) { self }
+    Rails.cache.fetch(cache_key, expires_id: 24.hours) do
+      self
+    end
   end
 
   def expire_cache
@@ -17,6 +19,6 @@ class Connection < ApplicationRecord
   end
 
   def cache_key
-    "api_connection:#{id}"
+    "api_connection:#{user_id}:#{id}"
   end
 end

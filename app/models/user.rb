@@ -8,7 +8,6 @@ class User < ApplicationRecord
 
   around_create :create_on_shard
   before_create :generate_secrets
-  after_update :expire_cache
   after_create  :create_lookup_user, :create_cache
   after_destroy :destroy_lookup_user, :expire_cache
 

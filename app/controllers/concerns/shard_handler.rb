@@ -12,7 +12,7 @@ module ShardHandler
     @shard                = select_shard || DatabaseHandler.master_shard
     @database             = select_database || :master
     @connection           = DatabaseHandler.shards.public_send(shard.to_s).send(database.to_sym)
-    print_result
+    # print_result
     DatabaseHandler.with_database(connection, &block)
   end
 
