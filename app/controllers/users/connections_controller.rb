@@ -20,8 +20,9 @@ class Users::ConnectionsController < Users::BaseController
       if @connection.name.include?("generate")
         @connection.generate_data
         @connection.skip_cache_expire = true
+        UpdatesQueue.write(@connection.as_json.merge(shard: @shard))
       else
-        notify_client
+        @connection.notify_client
       end
 
       @connection.save!
@@ -39,15 +40,5 @@ class Users::ConnectionsController < Users::BaseController
     end
 
     redirect_back fallback_location: :root
-  end
-
-  private
-
-  def notify_client
-    l = Logger.new("tmp/client_notify.log")
-    l.info "\n\n\n"
-    l.info "--------------------------------------------------------------------------------------------"
-    l.info "#{@connection.updated_at} | ID: #{@connection.id} | Name: #{@connection.name}"
-    l.info "--------------------------------------------------------------------------------------------"
   end
 end

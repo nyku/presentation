@@ -28,7 +28,13 @@ class Connection < ApplicationRecord
     end
   end
 
-  private
+  def notify_client
+    l = Logger.new("tmp/client_notify.log")
+    l.info "\n\n\n"
+    l.info "--------------------------------------------------------------------------------------------"
+    l.info "#{updated_at} | ID: #{id} | Name: #{name}"
+    l.info "--------------------------------------------------------------------------------------------"
+  end
 
   def create_cache
     Rails.cache.fetch(cache_key, expires_id: 24.hours) { self }
