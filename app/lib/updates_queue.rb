@@ -34,6 +34,7 @@ class UpdatesQueue
     payloads.each do |payload|
       connection = Connection.new(payload.except("shard"))
       connection.expire_cache
+      connection.create_cache
       connection.notify_client
     end
   end
